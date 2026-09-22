@@ -172,13 +172,12 @@ def _default_active_event_classes() -> tuple[str, ...] | None:
     """
     Which of the researched events (see data/calendar.py's `event_class`:
     MAJOR/SECONDARY/RESEARCH_ONLY) the live engine will actually activate
-    trackers for. None = no restriction (every usable-for-engine event, of
-    any class, is activated) -- the historical default, kept as-is unless
-    the operator opts into a narrower set via PSYGRID_ACTIVE_EVENT_CLASSES
-    (comma-separated, e.g. "MAJOR" or "MAJOR,SECONDARY"). This does not
-    delete or hide any event from the researched calendar (see
-    docs/PRECISION_AUDIT.md #3) -- it only controls what the live engine
-    reacts to.
+    trackers for. The live-safe default is MAJOR,SECONDARY; RESEARCH_ONLY
+    events are excluded because their timing is explicitly unconfirmed.
+    The operator can override this via PSYGRID_ACTIVE_EVENT_CLASSES
+    (comma-separated, e.g. "MAJOR" or "MAJOR,SECONDARY,RESEARCH_ONLY").
+    This does not delete or hide any event from the researched calendar --
+    it only controls what the live engine reacts to.
     """
     raw = os.environ.get("PSYGRID_ACTIVE_EVENT_CLASSES")
     if not raw:
