@@ -58,6 +58,19 @@ class SignalStore:
             ).fetchone()
             return row is not None
 
+    def claim_signal(self, signal: Signal) -> bool:
+        """
+        Atomically claim an opportunity before attempting Telegram delivery.
+
+        This makes duplicate alerting at-most-once across concurrent workers:
+        the first writer owns the opportunity, later writers cannot send it.
+        If Telegram subsequently fails, the row remains with telegram_sent=0
+        so the failed delivery is visible and is never silently re-sent by a
+        restart. Exactly-once delivery across a database and Telegram network
+        boundary is impossible without an external idempotency key.
+        """
+        return self.record_signal(signal, telegram_sent=False)
+
     def record_signal(self, signal: Signal, telegram_sent: bool) -> bool:
         """Insert the signal if new. Returns True if newly inserted, False if it already existed."""
         payload = asdict(signal)
