@@ -189,7 +189,7 @@ def _default_active_event_classes() -> tuple[str, ...] | None:
 class EngineConfig:
     instruments: tuple[str, ...] = INSTRUMENTS
     events_json_path: str = "data/events_sep22_oct31_2026.json"
-    active_event_classes: tuple[str, ...] | None = field(default_factory=_default_active_event_classes)
+    active_event_classes: tuple[str, ...] | None = None
     data: DataConfig = field(default_factory=DataConfig)
     windows: EventWindowConfig = field(default_factory=EventWindowConfig)
     impulse: ImpulseConfig = field(default_factory=ImpulseConfig)
@@ -202,5 +202,5 @@ class EngineConfig:
 
 
 def load_config() -> EngineConfig:
-    """Single entry point for obtaining engine configuration."""
-    return EngineConfig()
+    """Single entry point for obtaining production engine configuration."""
+    return EngineConfig(active_event_classes=_default_active_event_classes())
