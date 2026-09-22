@@ -64,7 +64,7 @@ Environment variables (never hard-coded):
 | `TELEGRAM_CHAT_ID` | Telegram chat/channel to post signals to | **Yes**, for `run_signal_engine.py` |
 | `PSYGRID_LIVE_ENDPOINT` | Override the live data endpoint (defaults to the provided URL) | No |
 | `PSYGRID_DB_PATH` | Override the SQLite signal-store path (default `storage/psygrid.db`) | No |
-| `PSYGRID_ACTIVE_EVENT_CLASSES` | Comma-separated subset of `MAJOR,SECONDARY,RESEARCH_ONLY` to activate on (default: all) | No |
+| `PSYGRID_ACTIVE_EVENT_CLASSES` | Comma-separated subset of `MAJOR,SECONDARY,RESEARCH_ONLY` to activate on (default: `MAJOR,SECONDARY`) | No |
 
 `run_signal_engine.py` refuses to start without `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` set —
 see below.
@@ -233,7 +233,7 @@ All tests use deterministic synthetic fixtures (`tests/factories.py`) — no net
 market data required. Coverage includes: endpoint payload parsing/schema validation, M1
 dedup/causal slicing, M5 aggregation (with an explicit no-look-ahead check), timezone conversion
 (including a regression test for the US-evening/IST-midnight-rollover case), event window
-activation, event-class/time-confirmation-tier filtering, the event-minute baseline-boundary fix
+activation, event-class/time-confirmation-tier filtering (live default: `MAJOR,SECONDARY`), the event-minute baseline-boundary fix
 (`docs/PRECISION_AUDIT.md` §1), simultaneous-event handling, impulse/pullback/structure/trigger
 detection, full long & short signal generation, the required Telegram message format,
 duplicate-signal suppression (including across a simulated process restart),
