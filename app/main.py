@@ -112,7 +112,14 @@ def run_once(
 
     new_opportunity_ids: list[str] = []
     for event in active_events:
-        symbols = [s for s in event.affected_instruments if s in config.instruments] or list(config.instruments)
+        symbols = [s for s in event.affected_instruments if s in config.instruments]
+        if not symbols:
+            logger.warning(
+                "skipping event %s (%s): no explicitly mapped configured instruments",
+                event.event_id,
+                event.event_name,
+            )
+            continue
         for symbol in symbols:
             key = (event.event_id, symbol)
             tracker = trackers.get(key)
