@@ -40,17 +40,26 @@ def _configure_logging() -> None:
 
 def handle_signal(signal: Signal, store: SignalStore, config: EngineConfig) -> bool:
     """Send + persist a newly fired signal. Returns True iff it was newly recorded (not a duplicate)."""
-    if store.has_signal(signal.opportunity_id):
+    # Claim the opportunity in SQLite BEFORE touching Telegram. This closes
+    # the race where two workers could both observe "not sent" and both post.
+    claimed = store.claim_signal(signal)
+    if not claimed:
         logger.debug("duplicate signal suppressed: %s", signal.opportunity_id)
         return False
 
     sent = send_signal(signal, config.telegram)
-    inserted = store.record_signal(signal, telegram_sent=sent)
-    if inserted:
+    if sent:
+        store.mark_telegram_sent(signal.opportunity_id)
         logger.info("SIGNAL FIRED\n%s", signal.format_message())
     else:
-        logger.debug("signal already recorded by a concurrent writer: %s", signal.opportunity_id)
-    return inserted
+        # The opportunity stays persisted with telegram_sent=0. We do not
+        # automatically retry because that would trade a known delivery
+        # failure for possible duplicate delivery after an ambiguous timeout.
+        logger.error(
+            "SIGNAL CLAIMED BUT TELEGRAM DELIVERY FAILED: %s",
+            signal.opportunity_id,
+        )
+    return True
 
 
 @dataclass
