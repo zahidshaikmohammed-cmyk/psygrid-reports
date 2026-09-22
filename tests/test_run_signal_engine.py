@@ -154,6 +154,47 @@ def test_run_forever_restart_does_not_resend_same_signal(tmp_path, monkeypatch):
     assert len(sent_calls) == 1  # still just the one send -- no duplicate alert after "restart"
 
 
+def test_failed_telegram_delivery_is_not_resent_after_restart(tmp_path, monkeypatch):
+    """A failed/ambiguous Telegram send is persisted as undelivered and is not retried automatically."""
+    send_attempts = []
+    import app.main as app_main
+    monkeypatch.setattr(
+        app_main,
+        "send_signal",
+        lambda signal, cfg: send_attempts.append(signal.opportunity_id) or False,
+    )
+
+    event, all_bars = _build_long_scenario()
+    calendar = EventCalendar(events=[event], metadata={})
+    config = _config(tmp_path)
+    db_path = str(tmp_path / "db.sqlite")
+
+    series1 = {"EURUSD": M1Series("EURUSD")}
+    series1["EURUSD"].update(all_bars)
+    store1 = SignalStore(db_path)
+    run_forever(
+        config=config, client=_FakeClient(), calendar=calendar, m1_series=series1,
+        trackers={}, store=store1, sleep_fn=lambda s: None,
+        now_fn=_MinuteClock(all_bars[0].timestamp), max_iterations=len(all_bars) + 5,
+        status_interval_seconds=0.0,
+    )
+    assert len(send_attempts) == 1
+    rows = store1.all_signals()
+    assert len(rows) == 1
+    assert rows[0]["telegram_sent"] == 0
+
+    series2 = {"EURUSD": M1Series("EURUSD")}
+    series2["EURUSD"].update(all_bars)
+    store2 = SignalStore(db_path)
+    run_forever(
+        config=config, client=_FakeClient(), calendar=calendar, m1_series=series2,
+        trackers={}, store=store2, sleep_fn=lambda s: None,
+        now_fn=_MinuteClock(all_bars[0].timestamp), max_iterations=len(all_bars) + 5,
+        status_interval_seconds=0.0,
+    )
+    assert len(send_attempts) == 1
+
+
 def test_run_forever_handles_keyboard_interrupt_gracefully(tmp_path):
     config = _config(tmp_path)
     calendar = EventCalendar(events=[], metadata={})
