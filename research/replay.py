@@ -72,7 +72,9 @@ def run_replay(
     for event in calendar.usable_events():
         event_time = event.event_datetime_utc
         assert event_time is not None
-        symbols = [s for s in event.affected_instruments if s in config.instruments] or list(config.instruments)
+        symbols = [s for s in event.affected_instruments if s in config.instruments]
+        if not symbols:
+            continue
 
         window_start = event_time - timedelta(minutes=config.windows.pre_event_context_minutes)
         window_end = event_time + timedelta(minutes=config.windows.setup_expiry_minutes)
