@@ -37,7 +37,7 @@ class DataConfig:
 
     endpoint_url: str = field(
         default_factory=lambda: os.environ.get(
-            "PSYGRID_LIVE_ENDPOINT", "http://140.245.226.102:8080/public/live.json"
+            "PSYGRID_LIVE_ENDPOINT", "http://140.245.226.102:8080/public/m1-live.json"
         )
     )
     request_timeout_seconds: float = 10.0
@@ -182,7 +182,7 @@ def _default_active_event_classes() -> tuple[str, ...] | None:
     """
     raw = os.environ.get("PSYGRID_ACTIVE_EVENT_CLASSES")
     if not raw:
-        return None
+        return ("MAJOR", "SECONDARY")
     return tuple(c.strip().upper() for c in raw.split(",") if c.strip())
 
 
