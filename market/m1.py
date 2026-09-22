@@ -1,6 +1,23 @@
 """
 M1 candle representation and rolling per-symbol M1 series.
 
+CANDLE TIMESTAMP SEMANTICS (audited, see docs/PRECISION_AUDIT.md §1):
+`Candle.timestamp` is treated as the candle's OPEN time -- a bar timestamped
+12:30:00 is assumed to cover the interval [12:30:00, 12:31:00). This is the
+near-universal convention for M1/OHLC feeds (MetaTrader, most broker/vendor
+REST APIs) and is the most reasonable reading of the schema example in the
+project brief, but it has NOT been empirically verified against the live
+PSYGRID endpoint -- that endpoint was not reachable from the environment
+this code was built in (direct requests to it time out). If/when the live
+endpoint is confirmed reachable, verify this assumption by checking whether
+a symbol's `updated_at`/`last_candle_timestamp` lags the newest
+`candles_1m[-1].timestamp` by ~1 minute (consistent with open-time: the bar
+is still forming when first seen) or is equal to it (consistent with
+close-time). Every place in this codebase that treats a bar as "the bar
+during which event/instant X occurred" (see
+strategy.signal.split_baseline_and_post_event) depends on this assumption
+being correct.
+
 The series is the single source of truth for "what did we know as of time T"
 -- every read method that takes an `as_of` timestamp returns only candles
 with timestamp <= as_of, which is what makes the same code path safe to

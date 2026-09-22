@@ -66,26 +66,53 @@ class Signal:
     generated_at: datetime
 
     def format_message(self) -> str:
+        """
+        Matches the field-by-field template PSYGRID's operator requires for
+        the Telegram alert (see README.md's "Telegram alerts" section) --
+        every labeled line below is a literal requirement, not just a
+        convenient layout.
+        """
         r_multiple = abs(self.target - self.entry) / abs(self.entry - self.stop) if self.entry != self.stop else 0.0
         return (
-            "PSYGRID REPORT SIGNAL\n\n"
+            "PSYGRID SIGNAL\n\n"
             f"Instrument: {self.symbol}\n"
             f"Event: {self.event_name}\n"
-            f"Event time (UTC): {self.event_time.strftime('%Y-%m-%d %H:%M')}\n\n"
+            f"Event time: {self.event_time.strftime('%Y-%m-%d %H:%M')} UTC\n\n"
             f"Direction: {self.direction}\n\n"
-            f"Impulse: confirmed\n"
-            f"Impulse strength score: {self.impulse_strength:.2f}\n\n"
-            f"Pullback: confirmed\n"
-            f"Retracement: {self.retracement_fraction * 100:.0f}%\n\n"
-            f"M5 structure score: {self.structure_score:.2f}\n"
+            f"Impulse: confirmed (strength {self.impulse_strength:.2f})\n"
+            f"Pullback: confirmed (retracement {self.retracement_fraction * 100:.0f}%)\n"
+            f"M5 structure: confirmed (score {self.structure_score:.2f})\n"
             f"M1 trigger: confirmed\n\n"
             f"Entry: {self.entry:.5f}\n"
             f"Stop: {self.stop:.5f}\n"
             f"Target: {self.target:.5f} (~{r_multiple:.2f}R)\n\n"
             f"Setup quality: {self.setup_quality:.0f}/100\n"
             f"Expected holding window: <= {self.expected_holding_minutes:.0f} minutes\n\n"
-            f"opportunity_id={self.opportunity_id}"
+            f"Opportunity ID: {self.opportunity_id}"
         )
+
+
+def split_baseline_and_post_event(
+    all_bars: list, event_time: datetime, window_end: datetime, as_of: datetime
+) -> tuple[list, list]:
+    """
+    Split a symbol's causal M1 bars into pre-event baseline vs. post-event
+    reaction bars, relative to event_time (T0).
+
+    Candle timestamp semantics: per market/m1.py, a candle's `timestamp` is
+    its OPEN time -- e.g. a bar timestamped 12:30:00 covers [12:30, 12:31).
+    That means the bar timestamped exactly at event_time is the bar DURING
+    WHICH the event fires: it must never leak into the "normal, pre-event"
+    baseline used to compute rolling ATR/volatility (that would contaminate
+    the baseline with the event's own impact), and it IS the first bar
+    eligible for impulse detection (excluding it there would silently
+    discard the event's very first minute of reaction). Baseline therefore
+    uses a strict `<`; the post-event window starts at (not after)
+    event_time.
+    """
+    baseline = [c for c in all_bars if c.timestamp < event_time]
+    post_event = [c for c in all_bars if event_time <= c.timestamp <= min(as_of, window_end)]
+    return baseline, post_event
 
 
 _VALID_PULLBACK_STATES_FOR_STRUCTURE = {PullbackStatus.HEALTHY, PullbackStatus.DEEP}
@@ -159,14 +186,12 @@ class SetupTracker:
     def _step_impulse(self, m1_series: M1Series, as_of: datetime) -> None:
         event_time = self.event.event_datetime_utc
         all_bars = m1_series.as_of(as_of)
-        baseline_bars = [c for c in all_bars if c.timestamp <= event_time]
         window_end = event_time + timedelta(minutes=self.config.windows.impulse_detection_minutes)
-        post_event_bars = [c for c in all_bars if event_time < c.timestamp <= min(as_of, window_end)]
+        baseline_bars, post_event_bars = split_baseline_and_post_event(all_bars, event_time, window_end, as_of)
 
         result = detect_impulse(
             self.symbol, baseline_bars, post_event_bars, event_time, as_of, self.config.impulse
         )
-        window_end = event_time + timedelta(minutes=self.config.windows.impulse_detection_minutes)
         if result.status == ImpulseStatus.CONFIRMED and result.impulse is not None:
             # Evidence already clears the threshold, but if the best bar seen so far is
             # still the most recent one, the move may still be extending -- lock in the

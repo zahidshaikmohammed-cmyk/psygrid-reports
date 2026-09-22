@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import logging
 import time
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
 from app.config import EngineConfig, load_config
@@ -37,10 +38,11 @@ def _configure_logging() -> None:
     )
 
 
-def handle_signal(signal: Signal, store: SignalStore, config: EngineConfig) -> None:
+def handle_signal(signal: Signal, store: SignalStore, config: EngineConfig) -> bool:
+    """Send + persist a newly fired signal. Returns True iff it was newly recorded (not a duplicate)."""
     if store.has_signal(signal.opportunity_id):
         logger.debug("duplicate signal suppressed: %s", signal.opportunity_id)
-        return
+        return False
 
     sent = send_signal(signal, config.telegram)
     inserted = store.record_signal(signal, telegram_sent=sent)
@@ -48,6 +50,22 @@ def handle_signal(signal: Signal, store: SignalStore, config: EngineConfig) -> N
         logger.info("SIGNAL FIRED\n%s", signal.format_message())
     else:
         logger.debug("signal already recorded by a concurrent writer: %s", signal.opportunity_id)
+    return inserted
+
+
+@dataclass
+class RunOnceResult:
+    """Everything a status display (e.g. run_signal_engine.py) needs about one scan iteration."""
+
+    scan_time: datetime
+    fetch_ok: bool
+    fetch_error: str | None = None
+    fresh_symbols: int = 0
+    total_symbols: int = 0
+    active_event_count: int = 0
+    active_tracker_count: int = 0
+    new_signal_count: int = 0
+    new_opportunity_ids: list[str] = field(default_factory=list)
 
 
 def run_once(
@@ -57,9 +75,11 @@ def run_once(
     m1_series: dict[str, M1Series],
     trackers: dict[tuple[str, str], SetupTracker],
     store: SignalStore,
-) -> None:
-    now = datetime.now(timezone.utc)
+    now: datetime | None = None,
+) -> RunOnceResult:
+    now = now or datetime.now(timezone.utc)
     fetch_result = client.fetch()
+    fresh_symbols = 0
 
     if fetch_result.ok and fetch_result.payload is not None:
         validated = validate_payload(fetch_result.payload, config.data, config.instruments, now=now)
@@ -69,6 +89,8 @@ def run_once(
         for symbol, parsed in validated.symbols.items():
             if parsed.candles:
                 m1_series[symbol].update(parsed.candles)
+            if parsed.quality == DataQuality.FRESH:
+                fresh_symbols += 1
             if parsed.quality in (DataQuality.STALE, DataQuality.MISSING, DataQuality.INVALID):
                 logger.debug("%s data quality=%s issues=%s", symbol, parsed.quality.value, parsed.issues)
 
@@ -80,12 +102,15 @@ def run_once(
     else:
         logger.warning("live endpoint fetch failed: %s", fetch_result.error)
 
+    active_event_classes = set(config.active_event_classes) if config.active_event_classes else None
     active_events = calendar.active_events(
         now,
         lookback_minutes=config.windows.setup_expiry_minutes,
         lookahead_minutes=config.windows.pre_event_context_minutes,
+        classes=active_event_classes,
     )
 
+    new_opportunity_ids: list[str] = []
     for event in active_events:
         symbols = [s for s in event.affected_instruments if s in config.instruments] or list(config.instruments)
         for symbol in symbols:
@@ -103,9 +128,22 @@ def run_once(
 
             signal = tracker.step(series, now)
             if signal is not None:
-                handle_signal(signal, store, config)
+                if handle_signal(signal, store, config):
+                    new_opportunity_ids.append(signal.opportunity_id)
             elif tracker.is_terminal and tracker.outcome_type:
                 logger.debug("tracker %s:%s terminated: %s", event.event_id, symbol, tracker.outcome_type)
+
+    return RunOnceResult(
+        scan_time=now,
+        fetch_ok=fetch_result.ok,
+        fetch_error=fetch_result.error,
+        fresh_symbols=fresh_symbols,
+        total_symbols=len(config.instruments),
+        active_event_count=len(active_events),
+        active_tracker_count=sum(1 for t in trackers.values() if not t.is_terminal),
+        new_signal_count=len(new_opportunity_ids),
+        new_opportunity_ids=new_opportunity_ids,
+    )
 
 
 def main() -> None:

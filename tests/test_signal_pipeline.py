@@ -215,3 +215,62 @@ def test_setup_expires_when_nothing_happens():
     tracker, signal = _run_tracker_fully_loaded(event, all_bars, config)
     assert signal is None
     assert tracker.state in (SetupState.EXPIRED, SetupState.WATCHING_IMPULSE)
+
+
+def test_event_minute_candle_not_double_counted_through_full_tracker():
+    """
+    Integration-level regression test for the event-minute baseline-leak
+    bug (docs/PRECISION_AUDIT.md #1). A candle placed EXACTLY at event_time
+    with an extreme, out-of-baseline-character range must not be able to
+    contaminate the baseline ATR/stdev used to score subsequent bars -- it
+    must be treated purely as the first post-event bar.
+    """
+    config = EngineConfig()
+    baseline = flat_baseline(EPOCH, 45)
+    event_time = baseline[-1].timestamp + timedelta(minutes=1)  # a real candle WILL exist here
+    event = _make_event(event_time)
+
+    # The event-minute candle itself: a large bullish bar (the actual reaction).
+    event_minute_bar = c(event_time, baseline[-1].close, baseline[-1].close + 0.0009,
+                          baseline[-1].close - 0.0001, baseline[-1].close + 0.0008)
+    impulse_bars = bullish_impulse_bars(event_time + timedelta(minutes=1), open_price=event_minute_bar.close, n=3)
+
+    pullback_start = impulse_bars[-1].timestamp + timedelta(minutes=1)
+    impulse_extreme = max(b.high for b in ([event_minute_bar] + impulse_bars))
+    impulse_start = baseline[-1].close
+    impulse_size = impulse_extreme - impulse_start
+    target_low = impulse_extreme - 0.35 * impulse_size
+    pullback_bars = pullback_bars_down(
+        pullback_start,
+        open_price=impulse_bars[-1].close,
+        lows=[impulse_extreme - 0.10 * impulse_size, target_low, target_low + 0.05 * impulse_size],
+        closes=[impulse_extreme - 0.05 * impulse_size, target_low + 0.02 * impulse_size, target_low + 0.08 * impulse_size],
+    )
+    trigger_start = pullback_bars[-1].timestamp + timedelta(minutes=1)
+    trigger_bars = _bullish_trigger_bars(trigger_start, base=pullback_bars[-1].close)
+
+    all_bars = baseline + [event_minute_bar] + impulse_bars + pullback_bars + trigger_bars
+
+    series = M1Series("EURUSD")
+    series.update(all_bars)
+    tracker = SetupTracker(event=event, symbol="EURUSD", config=config)
+
+    # Directly verify the boundary split used by the tracker at a point where
+    # the event-minute candle is available.
+    from strategy.signal import split_baseline_and_post_event
+    as_of = event_minute_bar.timestamp
+    window_end = event_time + timedelta(minutes=config.windows.impulse_detection_minutes)
+    causal_bars = series.as_of(as_of)
+    baseline_split, post_event_split = split_baseline_and_post_event(causal_bars, event_time, window_end, as_of)
+    assert event_time not in {b.timestamp for b in baseline_split}
+    assert event_time in {b.timestamp for b in post_event_split}
+
+    # And the full pipeline still runs to completion without the contamination
+    # causing a crash or nonsensical state.
+    as_of = all_bars[0].timestamp
+    end = all_bars[-1].timestamp
+    step = timedelta(minutes=1)
+    while as_of <= end and not tracker.is_terminal:
+        tracker.step(series, as_of)
+        as_of += step
+    assert tracker.state in (SetupState.SIGNAL_FIRED, SetupState.EXPIRED, SetupState.INVALIDATED)

@@ -101,6 +101,13 @@ class SignalStore:
             )
             conn.commit()
 
+    def count_signals_since(self, since: datetime) -> int:
+        with closing(self._connect()) as conn:
+            row = conn.execute(
+                "SELECT COUNT(*) FROM signals WHERE generated_at >= ?", (since.isoformat(),)
+            ).fetchone()
+            return row[0] if row else 0
+
     def all_signals(self) -> list[dict]:
         with closing(self._connect()) as conn:
             conn.row_factory = sqlite3.Row

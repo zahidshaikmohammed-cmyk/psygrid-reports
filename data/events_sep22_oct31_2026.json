@@ -14,7 +14,7 @@
     "XAGUSD",
     "USOIL"
   ],
-  "methodology": "Research compiled for psygrid-reports quantitative trading research. Primary sources are the issuing official bodies (Federal Reserve/FOMC, BLS, BEA, Census Bureau, ECB, Bank of England/ONS, Bank of Japan, Statistics Bureau of Japan, RBA, ABS, RBNZ, Stats NZ, Bank of Canada, Statistics Canada, National Bureau of Statistics of China, EIA, API, OPEC, IEA) wherever a date/time could be confirmed. IMPORTANT ENVIRONMENT CAVEAT: this research was conducted in a sandboxed environment whose network egress proxy blocks direct HTTP(S) fetches to essentially all government/central-bank/IEA/OPEC/API top-level domains (bls.gov, bea.gov, census.gov, federalreserve.gov, ecb.europa.eu, bankofengland.co.uk, ons.gov.uk, boj.or.jp, rba.gov.au, abs.gov.au, rbnz.govt.nz, stats.govt.nz, bankofcanada.ca, statcan.gc.ca, stats.gov.cn, eia.gov, api.org, opec.org, iea.org were all unreachable via direct fetch). All dates/times were therefore obtained via web search snippets that quote, excerpt, or index these official pages (including officially-hosted PDFs and press releases surfaced by the search engine), then cross-checked against at least one reputable secondary calendar (TradingEconomics, Investing.com, FXStreet, Forex Factory, financecalendar.com, or similar) where possible. Every event carries an official_source field naming the primary body/page and a secondary_crosscheck field naming the corroborating secondary source. exact_time_confirmed is true only when the specific date AND local release time were corroborated with reasonable confidence; it is false for events where the date and/or time is a pattern-based estimate, a commonly-cited-but-not-primary-sourced approximation, or otherwise carries meaningful uncertainty - in every such case the notes field explains the basis for the estimate and what to verify closer to the date. No date or time in this dataset was invented without basis; where no reasonable estimate could be made, the item was omitted rather than guessed. Weekly recurring series (EIA Weekly Petroleum Status Report, API Weekly Statistical Bulletin, U.S. Initial Jobless Claims) are itemized once per week for the whole window, with holiday-shift weeks flagged explicitly. Timezone/DST handling: all local-time-to-IST conversions were computed programmatically using IANA tzdata (Python zoneinfo) for the exact date of each event, not manually, to correctly account for DST transitions within the window: US/Canada Eastern time remains EDT (UTC-4) for the entire window (US/Canada DST does not end until Sunday Nov 1, 2026, after the window closes); Euro Area/UK time is CEST/BST (UTC+2/UTC+1) through Saturday Oct 24, 2026 and CET/GMT (UTC+1/UTC+0) from Sunday Oct 25, 2026 (DST end) onward - so events after Oct 25 sit one hour later relative to IST than an equivalent local time before Oct 25; Australia is AEST (UTC+10) through Saturday Oct 3, 2026 and AEDT (UTC+11) from Sunday Oct 4, 2026 (DST start) onward; New Zealand is NZST (UTC+12) through Saturday Sep 26, 2026 and NZDT (UTC+13) from Sunday Sep 27, 2026 (DST start) onward; Japan, China and India do not observe DST and stay at fixed UTC+9 / UTC+8 / UTC+5:30 respectively throughout. KNOWN CAVEATS: (1) A U.S. government funding lapse (\"shutdown\") occurred earlier in FY2026 (a DHS-related partial shutdown Feb 14 - Apr 30, 2026) following the Oct 1 2025-Nov 12 2025 shutdown that disrupted BLS/Census/BEA data collection and release schedules; as of this research (Sep 22, 2026) a continuing resolution reportedly funds the government through Dec 11, 2026, so no shutdown-driven delay to the Sep22-Oct31, 2026 window was identified, but this should be reconfirmed close to each release given the pattern of repeated 2025-2026 funding lapses. (2) BoE: the Sep 17, 2026 MPC decision is the last one before this window opens; per the official 2026 MPC schedule the next decision is Nov 5, 2026, which falls OUTSIDE this window - there is deliberately NO BoE rate-decision event in this dataset. (3) RBA: the RBA now runs an 8-meetings/year schedule; the Sep 28-29, 2026 meeting (decision Sep 29) is the only RBA decision in this window - there is NO RBA meeting in October 2026 (next is Nov 2-3, 2026, outside the window) - confirmed against the official RBA 2026 schedule. (4) Every date/time flagged exact_time_confirmed=false should be reconfirmed against the named official_source shortly before trading around it; several (UK labour market October date, Japan trade balance date, Caixin PMI post-holiday date, China trade balance date, OPEC+ JMMC time, IEA OMR exact date, BoJ decision exact minute, New Zealand CPI exact minute, Australia flash PMI, US September new home sales date) are pattern-based estimates rather than directly-sourced primary confirmations.",
+  "methodology": "Research compiled for psygrid-reports quantitative trading research. Primary sources are the issuing official bodies (Federal Reserve/FOMC, BLS, BEA, Census Bureau, ECB, Bank of England/ONS, Bank of Japan, Statistics Bureau of Japan, RBA, ABS, RBNZ, Stats NZ, Bank of Canada, Statistics Canada, National Bureau of Statistics of China, EIA, API, OPEC, IEA) wherever a date/time could be confirmed. IMPORTANT ENVIRONMENT CAVEAT: this research was conducted in a sandboxed environment whose network egress proxy blocks direct HTTP(S) fetches to essentially all government/central-bank/IEA/OPEC/API top-level domains (bls.gov, bea.gov, census.gov, federalreserve.gov, ecb.europa.eu, bankofengland.co.uk, ons.gov.uk, boj.or.jp, rba.gov.au, abs.gov.au, rbnz.govt.nz, stats.govt.nz, bankofcanada.ca, statcan.gc.ca, stats.gov.cn, eia.gov, api.org, opec.org, iea.org were all unreachable via direct fetch). All dates/times were therefore obtained via web search snippets that quote, excerpt, or index these official pages (including officially-hosted PDFs and press releases surfaced by the search engine), then cross-checked against at least one reputable secondary calendar (TradingEconomics, Investing.com, FXStreet, Forex Factory, financecalendar.com, or similar) where possible. Every event carries an official_source field naming the primary body/page and a secondary_crosscheck field naming the corroborating secondary source. exact_time_confirmed is true only when the specific date AND local release time were corroborated with reasonable confidence; it is false for events where the date and/or time is a pattern-based estimate, a commonly-cited-but-not-primary-sourced approximation, or otherwise carries meaningful uncertainty - in every such case the notes field explains the basis for the estimate and what to verify closer to the date. No date or time in this dataset was invented without basis; where no reasonable estimate could be made, the item was omitted rather than guessed. Weekly recurring series (EIA Weekly Petroleum Status Report, API Weekly Statistical Bulletin, U.S. Initial Jobless Claims) are itemized once per week for the whole window, with holiday-shift weeks flagged explicitly. Timezone/DST handling: all local-time-to-IST conversions were computed programmatically using IANA tzdata (Python zoneinfo) for the exact date of each event, not manually, to correctly account for DST transitions within the window: US/Canada Eastern time remains EDT (UTC-4) for the entire window (US/Canada DST does not end until Sunday Nov 1, 2026, after the window closes); Euro Area/UK time is CEST/BST (UTC+2/UTC+1) through Saturday Oct 24, 2026 and CET/GMT (UTC+1/UTC+0) from Sunday Oct 25, 2026 (DST end) onward - so events after Oct 25 sit one hour later relative to IST than an equivalent local time before Oct 25; Australia is AEST (UTC+10) through Saturday Oct 3, 2026 and AEDT (UTC+11) from Sunday Oct 4, 2026 (DST start) onward; New Zealand is NZST (UTC+12) through Saturday Sep 26, 2026 and NZDT (UTC+13) from Sunday Sep 27, 2026 (DST start) onward; Japan, China and India do not observe DST and stay at fixed UTC+9 / UTC+8 / UTC+5:30 respectively throughout. KNOWN CAVEATS: (1) A U.S. government funding lapse (\"shutdown\") occurred earlier in FY2026 (a DHS-related partial shutdown Feb 14 - Apr 30, 2026) following the Oct 1 2025-Nov 12 2025 shutdown that disrupted BLS/Census/BEA data collection and release schedules; as of this research (Sep 22, 2026) a continuing resolution reportedly funds the government through Dec 11, 2026, so no shutdown-driven delay to the Sep22-Oct31, 2026 window was identified, but this should be reconfirmed close to each release given the pattern of repeated 2025-2026 funding lapses. (2) BoE: the Sep 17, 2026 MPC decision is the last one before this window opens; per the official 2026 MPC schedule the next decision is Nov 5, 2026, which falls OUTSIDE this window - there is deliberately NO BoE rate-decision event in this dataset. (3) RBA: the RBA now runs an 8-meetings/year schedule; the Sep 28-29, 2026 meeting (decision Sep 29) is the only RBA decision in this window - there is NO RBA meeting in October 2026 (next is Nov 2-3, 2026, outside the window) - confirmed against the official RBA 2026 schedule. (4) Every date/time flagged exact_time_confirmed=false should be reconfirmed against the named official_source shortly before trading around it; several (UK labour market October date, Japan trade balance date, Caixin PMI post-holiday date, China trade balance date, OPEC+ JMMC time, IEA OMR exact date, BoJ decision exact minute, New Zealand CPI exact minute, Australia flash PMI, US September new home sales date) are pattern-based estimates rather than directly-sourced primary confirmations.\n\nPRECISION AUDIT ADDENDUM (see docs/PRECISION_AUDIT.md): every event now also carries `time_confirmation_tier` (official_source_cited / secondary_calendar_only / pattern_estimate) and `event_class` (MAJOR / SECONDARY / RESEARCH_ONLY), derived mechanically from exact_time_confirmed + importance. `time_confirmation_tier=official_source_cited` means an official institutional calendar/page was the cited origin, NOT that it was fetched and read directly (this research environment could not reach any of those domains -- see original methodology note above). Treat MAJOR as the reliable engine-activation set; SECONDARY and RESEARCH_ONLY remain in the dataset for completeness and must be explicitly opted into.",
   "event_count": 74,
   "events": [
     {
@@ -28,6 +28,8 @@
       "exact_release_time_local": "16:30",
       "exact_release_time_IST": "02:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "American Petroleum Institute Weekly Statistical Bulletin schedule (api.org/products-and-services/statistics/api-weekly-statistical-bulletin)",
       "secondary_crosscheck": "Investing.com 'API Weekly Crude Stock' calendar entry",
       "affected_instruments": [
@@ -47,6 +49,8 @@
       "exact_release_time_local": "10:30",
       "exact_release_time_IST": "20:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "EIA Weekly Petroleum Status Report holiday/release schedule (eia.gov/petroleum/supply/weekly/schedule.php)",
       "secondary_crosscheck": "Investing.com 'EIA Crude Oil Inventories' calendar entry",
       "affected_instruments": [
@@ -67,6 +71,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "BEA news release schedule (bea.gov/news/schedule) - located via BEA press-release listing; BEA combined ITA/IIP quarterly release since March 2026",
       "secondary_crosscheck": "TradingEconomics economic calendar",
       "affected_instruments": [
@@ -88,6 +94,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "U.S. Department of Labor / Employment and Training Administration weekly release schedule (oui.doleta.gov) - 8:30am ET every Thursday, shifted only around federal holidays",
       "secondary_crosscheck": "TradingEconomics weekly calendar",
       "affected_instruments": [
@@ -109,6 +117,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Census Bureau New Residential Sales release cadence (census.gov/construction/nrs) - August report pattern confirms ~4-week lag from month end",
       "secondary_crosscheck": "TradingEconomics, FXStreet economic calendar",
       "affected_instruments": [
@@ -129,6 +139,8 @@
       "exact_release_time_local": "11:30",
       "exact_release_time_IST": "07:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ABS Labour Force Australia release page (abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -147,6 +159,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Census Bureau M3 Manufacturers' Shipments release schedule (census.gov/manufacturing/m3)",
       "secondary_crosscheck": "Investing.com economic calendar",
       "affected_instruments": [
@@ -167,6 +181,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Statistics Canada 'The Daily' release schedule / 2026-2027 release-dates PDF (www150.statcan.gc.ca)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -186,6 +202,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "BLS JOLTS news release schedule (bls.gov/schedule/news_release/jolts.htm)",
       "secondary_crosscheck": "TradingEconomics, FXStreet",
       "affected_instruments": [
@@ -207,6 +225,8 @@
       "exact_release_time_local": "14:30",
       "exact_release_time_IST": "10:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "RBA 'Media Release: 2026 Monetary Policy Board Meeting Dates' (rba.gov.au/media-releases/2025/mr-25-02.html)",
       "secondary_crosscheck": "TradingEconomics, Investing.com",
       "affected_instruments": [
@@ -225,6 +245,8 @@
       "exact_release_time_local": "16:30",
       "exact_release_time_IST": "02:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "American Petroleum Institute Weekly Statistical Bulletin schedule (api.org/products-and-services/statistics/api-weekly-statistical-bulletin)",
       "secondary_crosscheck": "Investing.com 'API Weekly Crude Stock' calendar entry",
       "affected_instruments": [
@@ -244,6 +266,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "BEA GDP release schedule (bea.gov/news/schedule/full and BEA 'Economic Release Schedule Updates' blog series)",
       "secondary_crosscheck": "TradingEconomics, Investing.com",
       "affected_instruments": [
@@ -270,6 +294,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "BEA release schedule - Personal Income and Outlays typically released same day as GDP third estimate per 2026 BEA schedule-update blog posts",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -296,6 +322,8 @@
       "exact_release_time_local": "09:30",
       "exact_release_time_IST": "07:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "National Bureau of Statistics of China release calendar (stats.gov.cn/english/PressRelease/ReleaseCalendar)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -317,6 +345,8 @@
       "exact_release_time_local": "10:30",
       "exact_release_time_IST": "20:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "EIA Weekly Petroleum Status Report holiday/release schedule (eia.gov/petroleum/supply/weekly/schedule.php)",
       "secondary_crosscheck": "Investing.com 'EIA Crude Oil Inventories' calendar entry",
       "affected_instruments": [
@@ -337,6 +367,8 @@
       "exact_release_time_local": "11:30",
       "exact_release_time_IST": "07:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ABS Consumer Price Index, Australia release page (abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -355,6 +387,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "U.S. Department of Labor / Employment and Training Administration weekly release schedule (oui.doleta.gov) - 8:30am ET every Thursday, shifted only around federal holidays",
       "secondary_crosscheck": "TradingEconomics weekly calendar",
       "affected_instruments": [
@@ -376,6 +410,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Institute for Supply Management ROB release-date calendar (ismworld.org/.../rob-report-calendar)",
       "secondary_crosscheck": "TradingEconomics, Investing.com",
       "affected_instruments": [
@@ -402,6 +438,8 @@
       "exact_release_time_local": "11:00",
       "exact_release_time_IST": "14:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Eurostat euro-indicators release pattern (ec.europa.eu/eurostat/en/web/products-euro-indicators) - flash HICP estimate published on the first day of the following month",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -422,6 +460,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "BLS Schedule of Releases for the Employment Situation (bls.gov/schedule/news_release/empsit.htm)",
       "secondary_crosscheck": "TradingEconomics, FXStreet, Investing.com",
       "affected_instruments": [
@@ -448,6 +488,8 @@
       "exact_release_time_local": null,
       "exact_release_time_IST": null,
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "SECONDARY",
       "official_source": "OPEC press-release series (opec.org/pr-detail) - JMMC meeting numbering sequence (67th meeting Aug 2, 2026) implies the 68th falls around early October 2026",
       "secondary_crosscheck": "tradingnewsterminal.com OPEC Meeting Tracker, EBC/Ultima Markets OPEC calendars",
       "affected_instruments": [
@@ -468,6 +510,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ISM ROB release-date calendar",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -494,6 +538,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "BEA/Census joint FT-900 release; date corroborated via BEA search-indexed press release confirming 'August 2026 ... Oct 6'",
       "secondary_crosscheck": "TradingEconomics, Census FT900 release page",
       "affected_instruments": [
@@ -515,6 +561,8 @@
       "exact_release_time_local": "16:30",
       "exact_release_time_IST": "02:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "American Petroleum Institute Weekly Statistical Bulletin schedule (api.org/products-and-services/statistics/api-weekly-statistical-bulletin)",
       "secondary_crosscheck": "Investing.com 'API Weekly Crude Stock' calendar entry",
       "affected_instruments": [
@@ -534,6 +582,8 @@
       "exact_release_time_local": "10:30",
       "exact_release_time_IST": "20:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "EIA Weekly Petroleum Status Report holiday/release schedule (eia.gov/petroleum/supply/weekly/schedule.php)",
       "secondary_crosscheck": "Investing.com 'EIA Crude Oil Inventories' calendar entry",
       "affected_instruments": [
@@ -554,6 +604,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "U.S. Department of Labor / Employment and Training Administration weekly release schedule (oui.doleta.gov) - 8:30am ET every Thursday, shifted only around federal holidays",
       "secondary_crosscheck": "TradingEconomics weekly calendar",
       "affected_instruments": [
@@ -575,6 +627,8 @@
       "exact_release_time_local": "09:45",
       "exact_release_time_IST": "07:15",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "Caixin/S&P Global PMI release cadence (normally 1st business day of month, delayed by China's National Day/Mid-Autumn Golden Week holiday, Oct 1-7, 2026)",
       "secondary_crosscheck": "FXStreet, MQL5 economic calendar",
       "affected_instruments": [
@@ -595,6 +649,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Statistics Canada Labour Force Survey release cadence (statcan.gc.ca/en/survey/household/3701)",
       "secondary_crosscheck": "TradingEconomics, FXStreet",
       "affected_instruments": [
@@ -614,6 +670,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "University of Michigan Surveys of Consumers release calendar (data.sca.isr.umich.edu)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -634,6 +692,8 @@
       "exact_release_time_local": "07:00",
       "exact_release_time_IST": "11:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "SECONDARY",
       "official_source": "ONS Labour Market Overview release cadence (ons.gov.uk/employmentandlabourmarket/.../uklabourmarket) - standard ~4-week publication cycle, 7:00am",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -654,6 +714,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "07:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "General Administration of Customs of China release cadence (typically 2nd week of the following month)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -674,6 +736,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "National Association of REALTORS release cadence (nar.realtor)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -693,6 +757,8 @@
       "exact_release_time_local": null,
       "exact_release_time_IST": null,
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "IEA Oil Market Report is published monthly, historically around mid-month (e.g., 13 May 2026 edition)",
       "secondary_crosscheck": "iea.org events listing ('Oil Market Report - October 2026' event page found in search)",
       "affected_instruments": [
@@ -711,6 +777,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "BLS Schedule of Releases for the CPI (bls.gov/schedule/news_release/cpi.htm)",
       "secondary_crosscheck": "TradingEconomics, Investing.com, usinflationcalculator.com",
       "affected_instruments": [
@@ -737,6 +805,8 @@
       "exact_release_time_local": "16:30",
       "exact_release_time_IST": "02:00",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "American Petroleum Institute Weekly Statistical Bulletin schedule (api.org/products-and-services/statistics/api-weekly-statistical-bulletin)",
       "secondary_crosscheck": "Investing.com 'API Weekly Crude Stock' calendar entry",
       "affected_instruments": [
@@ -756,6 +826,8 @@
       "exact_release_time_local": "07:00",
       "exact_release_time_IST": "11:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ONS GDP monthly estimate release announcement (gov.uk/government/statistics/announcements/gdp-monthly-estimate-uk-august-2026)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -775,6 +847,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "U.S. Department of Labor / Employment and Training Administration weekly release schedule (oui.doleta.gov) - 8:30am ET every Thursday, shifted only around federal holidays",
       "secondary_crosscheck": "TradingEconomics weekly calendar",
       "affected_instruments": [
@@ -796,6 +870,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "BLS PPI news release schedule (bls.gov/schedule/news_release/ppi.htm)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -816,6 +892,8 @@
       "exact_release_time_local": "10:30",
       "exact_release_time_IST": "20:00",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "SECONDARY",
       "official_source": "EIA Weekly Petroleum Status Report holiday/release schedule (eia.gov/petroleum/supply/weekly/schedule.php)",
       "secondary_crosscheck": "Investing.com 'EIA Crude Oil Inventories' calendar entry",
       "affected_instruments": [
@@ -836,6 +914,8 @@
       "exact_release_time_local": "11:30",
       "exact_release_time_IST": "06:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ABS Labour Force Australia release page - ABS confirmed return to third-Thursday publication from the September 2026 release onward",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -854,6 +934,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Census Bureau 2026 'Schedule of Release Dates for Principal Federal Economic Indicators' (census.gov/economic-indicators)",
       "secondary_crosscheck": "TradingEconomics, FXStreet",
       "affected_instruments": [
@@ -880,6 +962,8 @@
       "exact_release_time_local": "09:15",
       "exact_release_time_IST": "18:45",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Federal Reserve G.17 release schedule (federalreserve.gov/releases/g17)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -900,6 +984,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Statistics Canada CPI 'The Daily' release schedule (www150.statcan.gc.ca)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -919,6 +1005,8 @@
       "exact_release_time_local": "08:50",
       "exact_release_time_IST": "05:20",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "Ministry of Finance / Japan Customs 'Calendar of release dates' (customs.go.jp/toukei/calendar/calend_e.htm)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -938,6 +1026,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Census/HUD New Residential Construction release cadence (census.gov/construction/nrc)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -957,6 +1047,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "07:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "National Bureau of Statistics of China press release (stats.gov.cn/english/PressRelease)",
       "secondary_crosscheck": "TradingEconomics, itiger.com news summary of the release",
       "affected_instruments": [
@@ -978,6 +1070,8 @@
       "exact_release_time_local": "16:30",
       "exact_release_time_IST": "02:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "American Petroleum Institute Weekly Statistical Bulletin schedule (api.org/products-and-services/statistics/api-weekly-statistical-bulletin)",
       "secondary_crosscheck": "Investing.com 'API Weekly Crude Stock' calendar entry",
       "affected_instruments": [
@@ -997,6 +1091,8 @@
       "exact_release_time_local": "07:00",
       "exact_release_time_IST": "11:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ONS release page 'consumerpriceinflationukseptember2026' (ons.gov.uk)",
       "secondary_crosscheck": "TradingEconomics, moneyweek.com inflation tracker",
       "affected_instruments": [
@@ -1017,6 +1113,8 @@
       "exact_release_time_local": "10:30",
       "exact_release_time_IST": "20:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "EIA Weekly Petroleum Status Report holiday/release schedule (eia.gov/petroleum/supply/weekly/schedule.php)",
       "secondary_crosscheck": "Investing.com 'EIA Crude Oil Inventories' calendar entry",
       "affected_instruments": [
@@ -1037,6 +1135,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "U.S. Department of Labor / Employment and Training Administration weekly release schedule (oui.doleta.gov) - 8:30am ET every Thursday, shifted only around federal holidays",
       "secondary_crosscheck": "TradingEconomics weekly calendar",
       "affected_instruments": [
@@ -1058,6 +1158,8 @@
       "exact_release_time_local": "10:45",
       "exact_release_time_IST": "03:15",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "SECONDARY",
       "official_source": "Stats NZ Consumers Price Index release page (stats.govt.nz/information-releases)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1076,6 +1178,8 @@
       "exact_release_time_local": "11:00",
       "exact_release_time_IST": "05:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "S&P Global PMI release calendar (pmi.spglobal.com) - Australia flash typically released a day ahead of the US/Europe flash batch",
       "secondary_crosscheck": "Investing.com",
       "affected_instruments": [
@@ -1094,10 +1198,13 @@
       "exact_release_time_local": "07:00",
       "exact_release_time_IST": "11:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "ONS Retail Sales, Great Britain release cadence (~5 weeks after month end, 7:00am)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
-        "GBPUSD"
+        "GBPUSD",
+        "GBPJPY"
       ],
       "notes": "UNCERTAIN EXACT DATE: pattern-based estimate from ONS's typical cadence (August data released 18 Sep 2026); the precise September-2026-data release page was not directly confirmed in this research pass."
     },
@@ -1112,6 +1219,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "05:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Statistics Bureau of Japan CPI schedule of release (stat.go.jp/english/data/cpi/1582.html)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1132,6 +1241,8 @@
       "exact_release_time_local": "09:45",
       "exact_release_time_IST": "19:15",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "S&P Global PMI press-release calendar (pmi.spglobal.com)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1158,6 +1269,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "13:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "S&P Global PMI release-time convention (flash Eurozone PMI embargoed until 10:00 CET/CEST)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1177,6 +1290,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "Census Bureau New Residential Sales cadence (approx. 4-week lag from month-end, pattern-based estimate)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1196,6 +1311,8 @@
       "exact_release_time_local": "10:00",
       "exact_release_time_IST": "19:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "The Conference Board data release cadence (conference-board.org) - last Tuesday of the month, 10:00am ET",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1215,6 +1332,8 @@
       "exact_release_time_local": "16:30",
       "exact_release_time_IST": "02:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "American Petroleum Institute Weekly Statistical Bulletin schedule (api.org/products-and-services/statistics/api-weekly-statistical-bulletin)",
       "secondary_crosscheck": "Investing.com 'API Weekly Crude Stock' calendar entry",
       "affected_instruments": [
@@ -1234,6 +1353,8 @@
       "exact_release_time_local": "00:00",
       "exact_release_time_IST": "04:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "ECB Governing Council meeting calendar (ecb.europa.eu/press/calendars/mgcgc)",
       "secondary_crosscheck": "Multiple ECB-tracker sites",
       "affected_instruments": [
@@ -1252,6 +1373,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Census Bureau Economic Indicator release calendar (census.gov/economic-indicators/calendar-listview.html)",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1272,6 +1395,8 @@
       "exact_release_time_local": "09:45",
       "exact_release_time_IST": "19:15",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Bank of Canada 2026 schedule for policy announcements (bankofcanada.ca 2025 press release announcing the 2026 schedule)",
       "secondary_crosscheck": "TradingEconomics, Investing.com",
       "affected_instruments": [
@@ -1292,6 +1417,8 @@
       "exact_release_time_local": "10:30",
       "exact_release_time_IST": "20:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "EIA Weekly Petroleum Status Report holiday/release schedule (eia.gov/petroleum/supply/weekly/schedule.php)",
       "secondary_crosscheck": "Investing.com 'EIA Crude Oil Inventories' calendar entry",
       "affected_instruments": [
@@ -1312,6 +1439,8 @@
       "exact_release_time_local": "11:30",
       "exact_release_time_IST": "06:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ABS release pattern: quarterly CPI figures are folded into the monthly CPI release for March/June/September/December reference months",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1330,6 +1459,8 @@
       "exact_release_time_local": "14:00",
       "exact_release_time_IST": "06:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "RBNZ 'Monetary policy decision dates ... 2026/27' official schedule page (rbnz.govt.nz/hub/news) and RBNZ events calendar entry for this date",
       "secondary_crosscheck": "TradingEconomics, Investing.com, centralbank.watch",
       "affected_instruments": [
@@ -1348,6 +1479,8 @@
       "exact_release_time_local": "14:00",
       "exact_release_time_IST": "23:30",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "Federal Reserve Board FOMC meeting calendar (federalreserve.gov/monetarypolicy/fomccalendars.htm)",
       "secondary_crosscheck": "TradingEconomics, Investing.com, multiple FOMC-tracker sites",
       "affected_instruments": [
@@ -1374,6 +1507,8 @@
       "exact_release_time_local": "00:00",
       "exact_release_time_IST": "20:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "RESEARCH_ONLY",
       "official_source": "Bank of Japan 'Scheduled Dates of Monetary Policy Meetings in 2026' (boj.or.jp/en/mopo/mpmsche_minu/m_ref/mref250731a.pdf)",
       "secondary_crosscheck": "Multiple BoJ-tracker sites (MNI, EBC, FinanceCalendar)",
       "affected_instruments": [
@@ -1393,6 +1528,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "U.S. Department of Labor / Employment and Training Administration weekly release schedule (oui.doleta.gov) - 8:30am ET every Thursday, shifted only around federal holidays",
       "secondary_crosscheck": "TradingEconomics weekly calendar",
       "affected_instruments": [
@@ -1414,6 +1551,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "BEA GDP release schedule / 'Economic Release Schedule Updates' blog series (bea.gov/news/blog)",
       "secondary_crosscheck": "TradingEconomics, Investing.com",
       "affected_instruments": [
@@ -1440,6 +1579,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "BEA release schedule - historically bundled with the GDP advance estimate on the same release date",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1466,6 +1607,8 @@
       "exact_release_time_local": "14:15",
       "exact_release_time_IST": "18:45",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "MAJOR",
       "official_source": "ECB Governing Council meeting calendar (ecb.europa.eu/press/calendars/mgcgc)",
       "secondary_crosscheck": "TradingEconomics, Investing.com, multiple ECB-tracker sites",
       "affected_instruments": [
@@ -1492,6 +1635,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "18:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Statistics Canada release-dates schedule",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1510,6 +1655,8 @@
       "exact_release_time_local": "08:30",
       "exact_release_time_IST": "05:00",
       "exact_time_confirmed": true,
+      "time_confirmation_tier": "official_source_cited",
+      "event_class": "SECONDARY",
       "official_source": "Statistics Bureau of Japan CPI schedule of release",
       "secondary_crosscheck": "TradingEconomics",
       "affected_instruments": [
@@ -1529,6 +1676,8 @@
       "exact_release_time_local": "12:00",
       "exact_release_time_IST": "08:30",
       "exact_time_confirmed": false,
+      "time_confirmation_tier": "pattern_estimate",
+      "event_class": "SECONDARY",
       "official_source": "Bank of Japan 'Scheduled Dates of Monetary Policy Meetings in 2026' official PDF (boj.or.jp)",
       "secondary_crosscheck": "TradingEconomics, MNI BoJ Meeting Calendar, multiple secondary trackers",
       "affected_instruments": [

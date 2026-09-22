@@ -168,10 +168,29 @@ class StorageConfig:
     db_path: str = field(default_factory=lambda: os.environ.get("PSYGRID_DB_PATH", "storage/psygrid.db"))
 
 
+def _default_active_event_classes() -> tuple[str, ...] | None:
+    """
+    Which of the researched events (see data/calendar.py's `event_class`:
+    MAJOR/SECONDARY/RESEARCH_ONLY) the live engine will actually activate
+    trackers for. None = no restriction (every usable-for-engine event, of
+    any class, is activated) -- the historical default, kept as-is unless
+    the operator opts into a narrower set via PSYGRID_ACTIVE_EVENT_CLASSES
+    (comma-separated, e.g. "MAJOR" or "MAJOR,SECONDARY"). This does not
+    delete or hide any event from the researched calendar (see
+    docs/PRECISION_AUDIT.md #3) -- it only controls what the live engine
+    reacts to.
+    """
+    raw = os.environ.get("PSYGRID_ACTIVE_EVENT_CLASSES")
+    if not raw:
+        return None
+    return tuple(c.strip().upper() for c in raw.split(",") if c.strip())
+
+
 @dataclass(frozen=True)
 class EngineConfig:
     instruments: tuple[str, ...] = INSTRUMENTS
     events_json_path: str = "data/events_sep22_oct31_2026.json"
+    active_event_classes: tuple[str, ...] | None = field(default_factory=_default_active_event_classes)
     data: DataConfig = field(default_factory=DataConfig)
     windows: EventWindowConfig = field(default_factory=EventWindowConfig)
     impulse: ImpulseConfig = field(default_factory=ImpulseConfig)

@@ -33,6 +33,10 @@ logger = logging.getLogger(__name__)
 IST_OFFSET = timedelta(hours=5, minutes=30)
 IST_ZONE = timezone(IST_OFFSET)
 
+# See docs/PRECISION_AUDIT.md #2-3 for how these are derived and what they mean.
+TIME_CONFIRMATION_TIERS = ("official_source_cited", "secondary_calendar_only", "pattern_estimate")
+EVENT_CLASSES = ("MAJOR", "SECONDARY", "RESEARCH_ONLY")
+
 
 @dataclass(frozen=True)
 class EconomicEvent:
@@ -52,6 +56,13 @@ class EconomicEvent:
     affected_instruments: tuple[str, ...]
     notes: str | None
     event_datetime_utc: datetime | None  # None if time not confirmed
+
+    # Added by the precision audit (docs/PRECISION_AUDIT.md #2-3). Defaults are
+    # deliberately the MOST CONSERVATIVE values, so any caller/fixture that
+    # constructs an EconomicEvent without specifying these never gets silently
+    # treated as more reliable than it is.
+    time_confirmation_tier: str = "pattern_estimate"
+    event_class: str = "RESEARCH_ONLY"
 
     @property
     def usable_for_engine(self) -> bool:
@@ -139,6 +150,18 @@ def _parse_event(raw: dict) -> EconomicEvent | None:
     if not isinstance(affected, list):
         affected = []
 
+    tier = raw.get("time_confirmation_tier")
+    if tier not in TIME_CONFIRMATION_TIERS:
+        if tier is not None:
+            logger.warning("unrecognized time_confirmation_tier %r for event %s; defaulting to pattern_estimate", tier, event_name)
+        tier = "pattern_estimate"
+
+    e_class = raw.get("event_class")
+    if e_class not in EVENT_CLASSES:
+        if e_class is not None:
+            logger.warning("unrecognized event_class %r for event %s; defaulting to RESEARCH_ONLY", e_class, event_name)
+        e_class = "RESEARCH_ONLY"
+
     return EconomicEvent(
         event_id=raw.get("event_id") or _make_event_id(date_str, raw.get("country_region"), event_name),
         date=date_str,
@@ -156,6 +179,8 @@ def _parse_event(raw: dict) -> EconomicEvent | None:
         affected_instruments=tuple(affected),
         notes=raw.get("notes"),
         event_datetime_utc=event_dt_utc,
+        time_confirmation_tier=tier,
+        event_class=e_class,
     )
 
 
@@ -183,24 +208,36 @@ class EventCalendar:
         metadata = {k: v for k, v in raw.items() if k != "events"} if isinstance(raw, dict) else {}
         return cls(events=events, metadata=metadata)
 
-    def usable_events(self) -> list[EconomicEvent]:
-        return [e for e in self.events if e.usable_for_engine]
+    def usable_events(self, classes: set[str] | None = None) -> list[EconomicEvent]:
+        """
+        Events with a confirmed exact time. `classes` optionally restricts
+        to a subset of {"MAJOR", "SECONDARY", "RESEARCH_ONLY"} -- e.g. pass
+        {"MAJOR"} to have the engine activate only the highest-confidence,
+        highest-importance events. None (default) means no restriction, so
+        existing callers keep today's behavior unchanged.
+        """
+        events = [e for e in self.events if e.usable_for_engine]
+        if classes is not None:
+            events = [e for e in events if e.event_class in classes]
+        return events
 
-    def events_in_window(self, start: datetime, end: datetime) -> list[EconomicEvent]:
+    def events_in_window(self, start: datetime, end: datetime, classes: set[str] | None = None) -> list[EconomicEvent]:
         return [
-            e for e in self.usable_events()
+            e for e in self.usable_events(classes=classes)
             if start <= e.event_datetime_utc <= end  # type: ignore[operator]
         ]
 
-    def next_event(self, now: datetime) -> EconomicEvent | None:
-        upcoming = [e for e in self.usable_events() if e.event_datetime_utc >= now]  # type: ignore[operator]
+    def next_event(self, now: datetime, classes: set[str] | None = None) -> EconomicEvent | None:
+        upcoming = [e for e in self.usable_events(classes=classes) if e.event_datetime_utc >= now]  # type: ignore[operator]
         return upcoming[0] if upcoming else None
 
-    def events_for_symbol(self, symbol: str) -> list[EconomicEvent]:
-        return [e for e in self.usable_events() if symbol in e.affected_instruments]
+    def events_for_symbol(self, symbol: str, classes: set[str] | None = None) -> list[EconomicEvent]:
+        return [e for e in self.usable_events(classes=classes) if symbol in e.affected_instruments]
 
-    def active_events(self, now: datetime, lookback_minutes: float, lookahead_minutes: float) -> list[EconomicEvent]:
+    def active_events(
+        self, now: datetime, lookback_minutes: float, lookahead_minutes: float, classes: set[str] | None = None
+    ) -> list[EconomicEvent]:
         """Events whose T0 falls within [now - lookback, now + lookahead]."""
         window_start = now - timedelta(minutes=lookback_minutes)
         window_end = now + timedelta(minutes=lookahead_minutes)
-        return self.events_in_window(window_start, window_end)
+        return self.events_in_window(window_start, window_end, classes=classes)
