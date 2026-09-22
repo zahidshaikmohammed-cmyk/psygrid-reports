@@ -46,7 +46,7 @@ class FetchResult:
 
 
 class LiveEndpointClient:
-    """Thin, retrying HTTP client around the live.json endpoint."""
+    """Thin, retrying HTTP client around the m1-live.json endpoint."""
 
     def __init__(self, config: DataConfig, session: requests.Session | None = None):
         self._config = config
