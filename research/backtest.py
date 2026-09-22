@@ -53,7 +53,7 @@ class SimulatedTrade:
 
 
 def load_m1_history_from_captures(capture_dir: str, instruments: tuple[str, ...], data_config) -> dict[str, M1Series]:
-    """Rebuild per-symbol M1Series from captured raw live.json polls."""
+    """Rebuild per-symbol M1Series from captured raw m1-live.json polls."""
     series_by_symbol = {s: M1Series(s) for s in instruments}
     files = sorted(glob.glob(f"{capture_dir.rstrip('/')}/*.jsonl"))
     if not files:
